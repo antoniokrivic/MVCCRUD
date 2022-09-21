@@ -1,0 +1,46 @@
+﻿@model Project.Service.ViewModels.VehicleModelViewModel
+
+@{
+    ViewBag.Title = "Izbrisi";
+}
+
+<h3>Zelis li sigurno obrisati ovo vozilo?</h3>
+<div>
+    <h3>Model Vozila</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleMake.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleMake.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Abrv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Abrv)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Nazad", "Index")
+        </div>
+    }
+</div>

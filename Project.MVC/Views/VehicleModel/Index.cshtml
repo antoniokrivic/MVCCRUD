@@ -1,0 +1,57 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Project.Service.ViewModels.VehicleModelViewModel>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Modeli vozila (VehicleModels)";
+}
+<h2>Modeli vozila (VehicleModel)</h2>
+<p>
+    @Html.ActionLink("Dodaj novo", "Create")
+</p>
+@using (Html.BeginForm("Index", "VehicleModel", FormMethod.Get))
+{
+    <p>
+        Trazilica: @Html.TextBox("Condition_search", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new {Condition_sort = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Model", "Index", new {Condition_sort = ViewBag.ModelSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Abrv", "Index", new {Condition_sort = ViewBag.AbrvSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleMake.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Abrv)
+        </td>
+        <td>
+            @Html.ActionLink("Uredi", "Edit", new { id=item.VModelID }) |
+            @Html.ActionLink("Detalji", "Details", new { id=item.VModelID }) |
+            @Html.ActionLink("Izbrisi", "Delete", new { id=item.VModelID })
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+Stranica @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, currentFilter = ViewBag.CurrentFilter, Condition_sort = Request["Condition_sort"] }))
